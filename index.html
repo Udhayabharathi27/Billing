@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Chicken Chilly Shop - Billing System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="shop-logo">
+                    <div class="logo-icon">🍗</div>
+                    <h1 class="shop-name">Chicken Chilly Shop</h1>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Dark Mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+            <nav class="nav-tabs desktop-nav">
+                <button class="nav-tab active" data-tab="menu">Menu</button>
+                <button class="nav-tab" data-tab="cart">Cart</button>
+                <button class="nav-tab" data-tab="invoices">Invoices</button>
+                <button class="nav-tab" data-tab="reports">Reports</button>
+                <button class="nav-tab" data-tab="manage">Manage</button>
+            </nav>
+        </header>
+        
+        <!-- Mobile Bottom Navigation -->
+        <nav class="mobile-bottom-nav">
+            <button class="mobile-nav-item active" data-tab="menu">
+                <span class="nav-icon">🍽️</span>
+                <span class="nav-label">Menu</span>
+            </button>
+            <button class="mobile-nav-item" data-tab="cart">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-label">Cart</span>
+            </button>
+            <button class="mobile-nav-item" data-tab="invoices">
+                <span class="nav-icon">📄</span>
+                <span class="nav-label">Invoices</span>
+            </button>
+            <button class="mobile-nav-item" data-tab="reports">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Reports</span>
+            </button>
+            <button class="mobile-nav-item" data-tab="manage">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Manage</span>
+            </button>
+        </nav>
+
+        <!-- Menu Section -->
+        <section id="menu-section" class="tab-content active">
+            <div class="menu-main">
+                <div class="menu-header">
+                    <div class="menu-title-section">
+                        <div class="menu-title-row">
+                            <h2 class="menu-title">
+                                <span class="title-icon">🍽️</span>
+                                Our Menu
+                            </h2>
+                            <button id="add-item-btn" class="btn btn-secondary add-item-btn">
+                                + Add Item
+                            </button>
+                        </div>
+                        <p class="menu-description">Choose from our delicious selection</p>
+                    </div>
+                </div>
+
+                <div id="menu-grid" class="menu-grid">
+                    <!-- Menu items will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart-section" class="tab-content">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items" class="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₹0.00</span>
+                </div>
+                <div class="discount-row">
+                    <label for="discount-input">Discount:</label>
+                    <input type="number" id="discount-input" placeholder="0" min="0" step="0.01">
+                    <select id="discount-type">
+                        <option value="fixed">₹</option>
+                        <option value="percent">%</option>
+                    </select>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total:</span>
+                    <span id="total">₹0.00</span>
+                </div>
+                <button id="generate-invoice-btn" class="btn btn-primary" disabled>Generate Invoice</button>
+            </div>
+        </section>
+
+        <!-- Invoices Section -->
+        <section id="invoices-section" class="tab-content">
+            <h2>Saved Invoices</h2>
+            <div id="invoices-list" class="invoices-list">
+                <!-- Invoices will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports-section" class="tab-content">
+            <h2>Sales Reports</h2>
+            <div class="reports-controls">
+                <div class="report-type-selector">
+                    <button class="report-type-btn active" data-type="daily">Daily Report</button>
+                    <button class="report-type-btn" data-type="monthly">Monthly Report</button>
+                </div>
+                <div class="date-selector">
+                    <input type="date" id="report-date" class="date-input">
+                    <input type="month" id="report-month" class="date-input" style="display: none;">
+                </div>
+            </div>
+            <div id="reports-content" class="reports-content">
+                <!-- Reports will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- Manage Menu Section -->
+        <section id="manage-section" class="tab-content">
+            <h2>Manage Menu Items</h2>
+            <button id="add-new-item-btn" class="btn btn-primary" style="width: auto; margin-bottom: 1.5rem;">
+                + Add New Item
+            </button>
+            <div id="manage-menu-list" class="manage-menu-list">
+                <!-- Menu items for management will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Invoice Preview Modal -->
+        <div id="invoice-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Invoice Preview</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div id="invoice-preview" class="invoice-preview">
+                    <!-- Invoice content will be generated here -->
+                </div>
+                <div class="modal-actions">
+                    <button id="print-invoice-btn" class="btn btn-primary">Print Invoice</button>
+                    <button id="save-invoice-btn" class="btn btn-secondary">Save Invoice</button>
+                    <button id="cancel-invoice-btn" class="btn btn-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Item Form Modal -->
+        <div id="menu-item-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="menu-form-title">Add Menu Item</h2>
+                    <button class="close-menu-modal">&times;</button>
+                </div>
+                <div class="menu-item-form">
+                    <div class="form-group">
+                        <label for="item-name">Item Name:</label>
+                        <input type="text" id="item-name" class="form-input" placeholder="Enter item name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-price">Price (₹):</label>
+                        <input type="number" id="item-price" class="form-input" placeholder="0.00" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-image">Image URL:</label>
+                        <input type="url" id="item-image" class="form-input" placeholder="https://images.unsplash.com/..." required>
+                        <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;">
+                            Leave empty to use a colored placeholder
+                        </small>
+                    </div>
+                    <div class="form-group" id="item-preview" style="display: none;">
+                        <label>Preview:</label>
+                        <div id="item-preview-content" style="max-width: 200px; margin-top: 0.5rem;"></div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="save-item-btn" class="btn btn-primary">Save Item</button>
+                    <button id="cancel-item-btn" class="btn btn-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/invoice.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+
