@@ -439,11 +439,24 @@ body {
 }
 
 /* Cart Styles */
+#cart-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#cart-section .cart-title {
+    flex-shrink: 0;
+    margin-bottom: 1.5rem;
+}
+
 .cart-items {
     margin-bottom: 2rem;
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 .empty-cart {
@@ -531,7 +544,8 @@ body {
     background: var(--bg-color);
     padding: 1.5rem;
     border-radius: 8px;
-    margin-top: 2rem;
+    margin-top: auto;
+    flex-shrink: 0;
 }
 
 .summary-row {
@@ -1211,8 +1225,24 @@ body {
         padding: 1rem;
         min-height: 0;
         flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .tab-content.active {
+        display: flex;
+    }
+    
+    #cart-section {
+        overflow: hidden;
+    }
+    
+    .cart-items {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        flex: 1;
+        min-height: 0;
     }
     
     .tab-content h2 {
@@ -1327,7 +1357,13 @@ body {
     
     .cart-summary {
         padding: 1rem;
-        margin-top: 1rem;
+        margin-top: auto;
+        flex-shrink: 0;
+    }
+    
+    #cart-section h2 {
+        flex-shrink: 0;
+        margin-bottom: 1rem;
     }
     
     .invoice-card {
@@ -1537,6 +1573,13 @@ body {
     
     .cart-summary {
         padding: 0.75rem;
+        margin-top: auto;
+        flex-shrink: 0;
+    }
+    
+    #cart-section h2 {
+        flex-shrink: 0;
+        margin-bottom: 0.75rem;
     }
     
     .summary-row {
