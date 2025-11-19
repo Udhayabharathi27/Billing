@@ -80,7 +80,7 @@
 
         <!-- Cart Section -->
         <section id="cart-section" class="tab-content">
-            <h2 class="cart-title">Shopping Cart</h2>
+            <h2>Shopping Cart</h2>
             <div id="cart-items" class="cart-items">
                 <p class="empty-cart">Your cart is empty</p>
             </div>
@@ -127,6 +127,9 @@
                 </div>
             </div>
             <div id="reports-content" class="reports-content">
+                <!-- Daily summary and sales chart will be shown here -->
+                <div id="daily-summary" class="daily-summary" style="margin-bottom: 2rem;"></div>
+                <canvas id="sales-chart" width="400" height="200" style="max-width:100%;margin-bottom:2rem;"></canvas>
                 <!-- Reports will be dynamically loaded here -->
             </div>
         </section>
@@ -197,6 +200,7 @@
     </div>
 
     <script src="js/theme.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/invoice.js"></script>

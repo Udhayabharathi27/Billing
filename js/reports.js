@@ -62,6 +62,7 @@ function loadDailyReport(date) {
 
     const reportData = calculateDailyReport(dayInvoices);
     displayDailyReport(reportData, date);
+    render7DaySalesChart();
 }
 
 // Load monthly report
@@ -157,8 +158,8 @@ function calculateMonthlyReport(invoices, year, month) {
 
 // Display daily report
 function displayDailyReport(data, date) {
-    const reportsContent = document.getElementById('reports-content');
-    if (!reportsContent) return;
+    const dailySummary = document.getElementById('daily-summary');
+    if (!dailySummary) return;
 
     const dateStr = date.toLocaleDateString('en-IN', {
         year: 'numeric',
@@ -189,7 +190,6 @@ function displayDailyReport(data, date) {
                 <h3>Best Selling Items - ${dateStr}</h3>
                 <div style="background: var(--bg-color); border-radius: 8px; padding: 1rem;">
         `;
-        
         data.bestSelling.forEach((item, index) => {
             html += `
                 <div class="item-stat">
@@ -198,7 +198,6 @@ function displayDailyReport(data, date) {
                 </div>
             `;
         });
-
         html += `
                 </div>
             </div>
@@ -207,9 +206,86 @@ function displayDailyReport(data, date) {
         html += `<p style="text-align: center; color: #999; margin-top: 2rem;">No sales data for ${dateStr}</p>`;
     }
 
-    reportsContent.innerHTML = html;
+    dailySummary.innerHTML = html;
+    // Render chart for daily best-selling items
+    const ctx = document.getElementById('sales-chart');
+    if (ctx && window.Chart) {
+        if (window.salesChartInstance) window.salesChartInstance.destroy();
+        if (data.bestSelling.length > 0) {
+            window.salesChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.bestSelling.map(i => i.name),
+                    datasets: [{
+                        label: 'Quantity Sold',
+                        data: data.bestSelling.map(i => i.quantity),
+                        backgroundColor: 'rgba(80,200,120,0.7)',
+                        borderColor: 'rgba(80,200,120,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Best Selling Items (Today)' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        } else {
+            ctx.getContext('2d').clearRect(0, 0, ctx.width, ctx.height);
+        }
+    }
 }
 
+// Render 7-day sales trend chart
+function render7DaySalesChart() {
+    const invoices = getSavedInvoices();
+    const today = new Date();
+    const days = [];
+    const sales = [];
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const dateStr = formatDate(d);
+        days.push(d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }));
+        const dayTotal = invoices
+            .filter(inv => formatDate(new Date(inv.date)) === dateStr)
+            .reduce((sum, inv) => sum + inv.total, 0);
+        sales.push(dayTotal);
+    }
+    const ctx = document.getElementById('sales-chart');
+    if (ctx && window.Chart) {
+        if (window.salesChartInstance) window.salesChartInstance.destroy();
+        window.salesChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'Total Sales (₹)',
+                    data: sales,
+                    fill: true,
+                    backgroundColor: 'rgba(80,200,120,0.15)',
+                    borderColor: 'rgba(80,200,120,1)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Sales Trend (Last 7 Days)' }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+}
 // Display monthly report
 function displayMonthlyReport(data, year, month) {
     const reportsContent = document.getElementById('reports-content');
@@ -265,7 +341,6 @@ function displayMonthlyReport(data, year, month) {
                 <h3>Best Selling Items - ${monthName}</h3>
                 <div style="background: var(--bg-color); border-radius: 8px; padding: 1rem;">
         `;
-        
         data.bestSelling.forEach((item, index) => {
             html += `
                 <div class="item-stat">
@@ -274,7 +349,6 @@ function displayMonthlyReport(data, year, month) {
                 </div>
             `;
         });
-
         html += `
                 </div>
             </div>
@@ -282,6 +356,40 @@ function displayMonthlyReport(data, year, month) {
     } else {
         html += `<p style="text-align: center; color: #999; margin-top: 2rem;">No sales data for ${monthName}</p>`;
     }
+
+    // Render chart for monthly sales (daily revenue)
+    setTimeout(() => {
+        const ctx = document.getElementById('sales-chart');
+        if (ctx && window.Chart) {
+            if (window.salesChartInstance) window.salesChartInstance.destroy();
+            const sortedDays = Object.keys(data.dailyBreakdown).sort((a, b) => a - b);
+            window.salesChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: sortedDays.map(day => `Day ${day}`),
+                    datasets: [{
+                        label: 'Revenue',
+                        data: sortedDays.map(day => data.dailyBreakdown[day].revenue),
+                        backgroundColor: 'rgba(74,144,226,0.2)',
+                        borderColor: 'rgba(74,144,226,1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true },
+                        title: { display: true, text: 'Daily Revenue (This Month)' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+    }, 100);
 
     reportsContent.innerHTML = html;
 }

@@ -1,3 +1,50 @@
+/* --- Modern Visual Upgrade Overrides --- */
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+.header {
+    background: linear-gradient(90deg, #4a90e2 0%, #50c878 100%);
+    border-radius: 0 0 18px 18px;
+    color: #fff;
+}
+.shop-logo .logo-icon {
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    padding: 0.3em;
+}
+.shop-name {
+    color: #fff;
+    letter-spacing: 1px;
+}
+.menu-item {
+    background: rgba(255,255,255,0.7);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(80, 200, 120, 0.10), 0 1.5px 6px 0 rgba(74, 144, 226, 0.10);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(.4,2,.3,1);
+}
+.menu-item:hover {
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 8px 32px 0 rgba(80, 200, 120, 0.18), 0 3px 12px 0 rgba(74, 144, 226, 0.18);
+    border-color: #4a90e2;
+    background: rgba(255,255,255,0.85);
+}
+.menu-item-image {
+    border-radius: 16px !important;
+    box-shadow: 0 2px 12px rgba(80,200,120,0.10);
+}
+/* Specific style for Add Item button in menu */
+#add-item-btn {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 180px;
+    margin: 0 !important;
+    padding: 0.4rem 1.2rem !important;
+    font-size: 1rem !important;
+    align-self: flex-start;
+    display: inline-block;
+    margin-top: 0 !important;
+}
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -311,7 +358,7 @@ body {
 
 .menu-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 2rem;
     gap: 1rem;
@@ -325,7 +372,7 @@ body {
 
 .menu-title-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
     margin-bottom: 0.5rem;
@@ -344,10 +391,11 @@ body {
 
 .add-item-btn {
     width: auto;
-    margin: 0;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    margin: 0 0 0 0;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
     white-space: nowrap;
+    align-self: flex-start;
 }
 
 .title-icon {
@@ -377,6 +425,7 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) transparent;
+    justify-content: center;
 }
 
 .menu-grid::-webkit-scrollbar {
@@ -439,24 +488,11 @@ body {
 }
 
 /* Cart Styles */
-#cart-section {
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-}
-
-#cart-section .cart-title {
-    flex-shrink: 0;
-    margin-bottom: 1.5rem;
-}
-
 .cart-items {
     margin-bottom: 2rem;
     flex: 1;
     overflow-y: auto;
     min-height: 0;
-    -webkit-overflow-scrolling: touch;
 }
 
 .empty-cart {
@@ -544,8 +580,7 @@ body {
     background: var(--bg-color);
     padding: 1.5rem;
     border-radius: 8px;
-    margin-top: auto;
-    flex-shrink: 0;
+    margin-top: 2rem;
 }
 
 .summary-row {
@@ -1225,24 +1260,8 @@ body {
         padding: 1rem;
         min-height: 0;
         flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .tab-content.active {
-        display: flex;
-    }
-    
-    #cart-section {
-        overflow: hidden;
-    }
-    
-    .cart-items {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        flex: 1;
-        min-height: 0;
     }
     
     .tab-content h2 {
@@ -1357,13 +1376,7 @@ body {
     
     .cart-summary {
         padding: 1rem;
-        margin-top: auto;
-        flex-shrink: 0;
-    }
-    
-    #cart-section h2 {
-        flex-shrink: 0;
-        margin-bottom: 1rem;
+        margin-top: 1rem;
     }
     
     .invoice-card {
@@ -1573,13 +1586,6 @@ body {
     
     .cart-summary {
         padding: 0.75rem;
-        margin-top: auto;
-        flex-shrink: 0;
-    }
-    
-    #cart-section h2 {
-        flex-shrink: 0;
-        margin-bottom: 0.75rem;
     }
     
     .summary-row {
