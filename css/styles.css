@@ -1464,157 +1464,18 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0.25rem;
-    }
-    
-    .header {
-        padding: 0.75rem;
-    }
-    
-    .shop-name {
-        font-size: 1.25rem;
-    }
-    
-    .logo-icon {
-        font-size: 1.5rem;
-    }
-    
-    .menu-layout {
-        gap: 1rem;
-    }
-    
-    .sidebar-content {
-        padding: 1rem;
-    }
-    
-    .sidebar-title {
-        font-size: 1.1rem;
-    }
-    
-    .sidebar-subtitle {
-        font-size: 0.85rem;
-    }
-    
-    .sidebar-features {
-        flex-direction: column;
-    }
-    
-    .feature-item {
-        min-width: 100%;
-        padding: 0.5rem 0.75rem;
-    }
-    
-    .feature-icon {
-        font-size: 1.1rem;
-    }
-    
-    .feature-text {
-        font-size: 0.8rem;
-    }
-    
-    .menu-title-row {
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .menu-title {
-        font-size: 1.25rem;
-        margin: 0;
-    }
-    
-    .title-icon {
-        font-size: 1.5rem;
-    }
-    
-    .menu-description {
-        font-size: 0.85rem;
-        margin: 0;
-    }
-    
-    .add-item-btn {
-        width: auto;
-        margin: 0;
-        padding: 0.5rem 0.75rem;
-        font-size: 0.85rem;
-        flex-shrink: 0;
-    }
-    
-    .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-        overflow-x: visible;
-        overflow-y: visible;
-    }
-    
-    .menu-item {
-        flex: none;
-        min-width: auto;
-        max-width: none;
-        width: 100%;
-        padding: 0.75rem;
-    }
-    
-    .menu-item-name {
-        font-size: 1rem;
-    }
-    
-    .menu-item-price {
-        font-size: 1.1rem;
-    }
-    
-    .nav-tab {
-        padding: 0.5rem;
-        font-size: 0.8rem;
-        min-width: auto;
-    }
-    
-    .tab-content {
-        padding: 0.75rem;
-    }
-    
-    .tab-content h2 {
-        font-size: 1.25rem;
-    }
-    
-    .btn {
-        padding: 0.75rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .cart-summary {
-        padding: 0.75rem;
-    }
-    
-    .summary-row {
-        font-size: 1rem;
-    }
-    
-    .total-row {
-        font-size: 1.25rem;
-    }
-}
+/* Add styles to ensure content is not hidden behind the bottom navigation bar */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 60px; /* Adjust padding to match the height of the bottom navigation bar */
+  }
 
-/* Small phones in landscape */
-@media (max-width: 640px) and (orientation: landscape) {
-    .header {
-        padding: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .shop-name {
-        font-size: 1.1rem;
-    }
-    
-    .nav-tab {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.75rem;
-    }
-    
-    .tab-content {
-        padding: 0.75rem;
-    }
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 }
 
